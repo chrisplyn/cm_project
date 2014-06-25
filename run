@@ -1,0 +1,43 @@
+#!/bin/bash
+
+if [ $# -ne 4 ]; then
+	echo "input a training file, cost parameter file, gamma parameter file and testing file" >&2
+	exit 1
+fi
+
+find . -name MSE_result > /dev/null
+if [ $? -eq 0 ]; then
+	rm MSE_result
+fi
+
+## do cross validation
+paramCost=(`cat $2 | tr '\n' ' '`)	
+paramGamma=(`cat $3 | tr '\n' ' '`) 
+
+for gamma in "${paramGamma[@]}"; do
+	./compute_kernel.py $1 testFile 1 $gamma testOFF
+	for cost in "${paramCost[@]}"; do
+		./svm-train -s 3 -t 4 -v 5 -c $cost trainingKernelMatrix > cv_result
+		MSE=`egrep "Mean squared error" cv_result | awk '{print $7}'`
+		echo "$MSE,$cost,$gamma" >> MSE_result
+	done
+done
+
+
+## find best c and gamma
+./sort_MSE.py > result
+bestCost=`cat result | tr -d "[]" | awk '{print $2}'`
+bestGamma=`cat result | tr -d "[]" | awk '{print $3}'`
+
+echo $bestCost >> result
+echo $bestGamma >> result
+
+## remove training contracts from the whole portfolio
+# ./process_testdata.py $1 $4
+
+# #compute training kernel matrix and testing kernel matrix based on best gamma parameter
+# ./compute_kernel.py $1 test_contract 1 $bestGamma testON
+# ./svm-train -s 4 -t 4 -c $bestCost trainingKernelMatrix contract_model > /dev/null
+# ./svm-predict testingKernelMatrix contract_model test_result >> result
+
+# ./compare_result.py >> result
