@@ -1,0 +1,51 @@
+\documentclass[letterpaper,12pt,titlepage,oneside,final]{book}
+
+\usepackage[pdftex]{graphicx} 
+
+\title{ECE650 Assignment 5}
+\author{Yinuo Liu\\ University of Waterloo}
+
+
+
+\begin{document}
+\maketitle
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=1.3\textwidth,height=0.5\textheight]{figure_1.png}
+    \caption{Running time (in $\log$ 10 based microseconds) of SAT-CNF-VC, Approx-VC-1 and Approx-VC-2}
+\end{figure}
+
+Figure 1 shows the running time (in $\log$ 10 based microseconds) of SAT-CNF-VC, Approx-VC-1 and Approx-VC-2. We can see that the average running time SAT-CNF is much larger than both approximation algorithms, and it increases quite fast as the number of vertices $V$ increase. Moreover, as $V$ gets larger, the variation of the running time of SAT-CNF-VC also increases significantly. We stop testing the SAT-CNF-VC when $V$ is larger than 17 since it will take tremendously long time to finish 100 runs.
+
+On the other hand, for the two approximation algorithms, their running time is almost a constant, but Approx-VC-2 tends to be slightly faster than Approx-VC-1. 
+
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=1.3\textwidth,height=0.5\textheight]{figure_2.png}
+    \caption{Approximation ratio of Approx-VC-1 and Approx-VC-2}
+\end{figure}
+
+Figure 2 shows the approximation ratio of Approx-VC-1 and Approx-VC-2. Obviously, Approx-VC-1 can approximate SAT-CNF-VC better than Approx-VC-2 as its Approx-VC-1 has smaller approximation ratio on average. In addition, as the approximation ratio of Approx-VC-2 varies greatly for the same $V$ and across different $V$, the approximation ratio of Approx-VC-1 is quite stable.
+
+
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=1.3\textwidth,height=0.5\textheight]{figure_3.png}
+    \caption{Running time (in $\log$ 10 based microseconds) of Approx-VC-1 and Approx-VC-2 for large $V$}
+\end{figure}
+
+Figure 3 shows how the running time of the two approximation algorithms for large number of vertices. We can see that even for large $V$, the two algorithms can finish in short time and the Approx-VC-2 as shown in Figure 1, is slightly faster than Approx-VC-1. However, Approx-VC-1 tends to have smaller variation in running time for large $V$. 
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=1.3\textwidth,height=0.5\textheight]{figure_4.png}
+    \caption{Ratio of vertex cover size of two approximation algorithms}
+\end{figure}
+
+Figure 4 shows the ratio of vertex cover size of Approx-VC-2 to Approx-VC-1. It is easy to see that Approx-VC-2 always outputs a vertex cover with larger size, but as $V$ increase, we can observe a decreasing trend of that ratio, which indicates that as $V$ gets larger, the two approximation algorithm will produce vertex covers with similar size. 
+
+In conclusion, sometimes it is not worth using the exact algorithm SAT-CNF-VC as it can be potentially slow and the Approx-VC-1 in most cases can give us, might be not the optimal vertex cover but a very good approximation to the optimal in significantly less amount of time, especially when number of vertices is large.  
+
+\end{document}
